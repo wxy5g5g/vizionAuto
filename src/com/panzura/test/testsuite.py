@@ -5,18 +5,26 @@ from pydoc import describe
 import json
 import requests
 from resources.pages.tenant import TenantPage
+from xml.dom import minidom
+from resources.units.property import Property
 
 
 class testsuite(singletest):
     
 
     def testPrint(self):
-        self.logInfo(singletest.apikey)
-     
+        
+     cccXmlPath = "../resources/properties/ccc.xml"
+     dom = minidom.parse(cccXmlPath)
+     root = dom.documentElement
+     ccc = dom.getElementsByTagName('serverIP')
+     serverip = ccc[0].firstChild.data
+     self.logInfo(serverip)
      
     def newTenant(self):
-        args = {'server_ip': '10.180.108.11',
-                'name': 'tenant_1234567',
+        serverip = Property.getProperties('serverIP')
+        args = {'server_ip': serverip,
+                'name': 'tenant_AAATTT',
                 'email': 'testVizion@panzura.com',
                 'info': 'insertNewTenantInfo',
                 'password': 'password',
@@ -36,7 +44,7 @@ class testsuite(singletest):
 if __name__ == "__main__":
     suite = unittest.TestSuite()
     suite.addTest(testsuite("newTenant"))
-    suite.addTest(testsuite("testPrint"))
+#    suite.addTest(testsuite("testPrint"))
     
     fp = open('../resources/report/result.html', 'wb')
     runner = HTMLTestRunner(stream=fp,title = 'my test report',description='my Description')
