@@ -30,4 +30,10 @@ class singletest(unittest.TestCase):
         
     def assertFalse(self, expr, msg=None):
         unittest.TestCase.assertFalse(self, expr, msg=msg)
+    
+    def assertEqual(self, first, second, msg=None):
+        unittest.TestCase.assertEqual(self, first, second, msg=msg)
+        
+    def assertIn(self, member, container, msg=None):
+        unittest.TestCase.assertIn(self, member, container, msg=msg)
         

@@ -20,13 +20,15 @@ class TenantPage(Page):
 
         response = requests.get(query_url, verify=False, timeout=60)
 
-        self.logInfo('Response Body is : ' + response.json())
+        self.logInfo("Response Body is as following :")
+#        self.logInfo(response.json())
         response_dict = response.json()
-        tenantName = []
-        for item in response_dict:
-            tenantName.append(item['name'])
-        self.logInfo("Name list is : " + tenantName)
-        return (response.status_code,tenantName)
+        tenantNames = []
+        for item in response_dict['data']:           
+            tenantNames.append(str(item['name']))
+            
+        self.logInfo(tenantNames)
+        return (response.status_code,tenantNames)
 
 
     def insert_tenant(self, apikey, args):
@@ -45,10 +47,10 @@ class TenantPage(Page):
 
         self.logInfo("Response Body is as following :")
         self.logInfo(response.json())
-        insertedTenantMeg = response.json()['message']
-        self.logInfo("The message field in Response Body is : " + insertedTenantMeg)
+        queryTenantMeg = response.json()['message']
+        self.logInfo("The message field in Response Body is : " + queryTenantMeg)
         
-        return (response.status_code,insertedTenantMeg)
+        return (response.status_code,queryTenantMeg)
     
     
     def update_tenant(self, apikey, args):
@@ -70,10 +72,10 @@ class TenantPage(Page):
         self.logInfo("Response Body is as following :")
         self.logInfo(response.json())
         response_dict = response.json()
-        insertedTenantMeg= response_dict['message']
-        self.logInfo("The message field in Response Body is : " + insertedTenantMeg)
+        updatedTenantMeg= response_dict['message']
+        self.logInfo("The message field in Response Body is : " + updatedTenantMeg)
         
-        return(response.status_code, insertedTenantMeg)
+        return(response.status_code, updatedTenantMeg)
         
 
     def delete_tenant(self, apikey, args):
@@ -85,7 +87,9 @@ class TenantPage(Page):
         self.logInfo("Response Body is as following :")
         self.logInfo(response.json())
         response_dict = response.json()
-        insertedTenantMeg= response_dict['message']
-        self.logInfo("The message field in Response Body is : " + insertedTenantMeg)
-        
-        return(response.status_code, insertedTenantMeg)
+    
+        returnStatus= response_dict['status']
+        if returnStatus == 1:
+            response.status_code = -1
+            self.logInfo("Tenant doesn't exist for name: " + '"' + args['name'] + '"')        
+        return response.status_code

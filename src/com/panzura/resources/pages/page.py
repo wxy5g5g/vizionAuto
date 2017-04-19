@@ -1,5 +1,6 @@
 import logging
 import inspect
+import exceptions
 
 
 log = logging.getLogger()
