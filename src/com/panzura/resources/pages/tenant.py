@@ -57,7 +57,6 @@ class TenantPage(Page):
         insert_url = 'https://' + args['server_ip'] + ':8443/tenants' + '?api_key=' + str(apikey)
         insert_tenant_json = json.dumps({'name': args['name'], 
                                          'email': args['email'], 
-                                         'group': [args['group']], 
                                          'info': args['info'], 
                                          'password': args['password'], 
                                          'phone': args['phone'], 
@@ -73,12 +72,14 @@ class TenantPage(Page):
         self.logInfo(response.json())
         response_dict = response.json()
         updatedTenantMeg= response_dict['message']
-        self.logInfo("The message field in Response Body is : " + updatedTenantMeg)
-        
+        if "Tenant doesn't exist for name" in updatedTenantMeg:
+            response.status_code = -1
+            self.logInfo("The message field in Response Body is : " + updatedTenantMeg)
         return(response.status_code, updatedTenantMeg)
         
 
     def delete_tenant(self, apikey, args):
+        """will return '1' if delete tenant successfully, otherwise will return -1"""
         delete_url = 'https://' + args['server_ip'] + ':8443/tenants/' + args['name'] + '?api_key=' + str(apikey)
         headers = {'content-type':'application/json'}
 
@@ -91,5 +92,7 @@ class TenantPage(Page):
         returnStatus= response_dict['status']
         if returnStatus == 1:
             response.status_code = -1
-            self.logInfo("Tenant doesn't exist for name: " + '"' + args['name'] + '"')        
-        return response.status_code
+            self.logInfo(response_dict['message'])    
+        else:
+            response.status_code = 1                
+        return (response.status_code, response_dict['message'])

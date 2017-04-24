@@ -26,14 +26,18 @@ class singletest(unittest.TestCase):
         log.info(detaledMsg)
     
     def assertTrue(self, expr, msg=None):
+        """ if expr is true will pass, otherwise will fail test case and print msg"""
         unittest.TestCase.assertTrue(self, expr, msg=msg)
         
     def assertFalse(self, expr, msg=None):
+        """ if expr is false will pass, otherwise will fail test case and print msg"""
         unittest.TestCase.assertFalse(self, expr, msg=msg)
     
     def assertEqual(self, first, second, msg=None):
+        """ if fiest equals second will pass, otherwise will fail test case and print msg"""
         unittest.TestCase.assertEqual(self, first, second, msg=msg)
         
     def assertIn(self, member, container, msg=None):
+        """ if member is contained by container will pass, otherwise will fail test case and print msg"""
         unittest.TestCase.assertIn(self, member, container, msg=msg)
         
