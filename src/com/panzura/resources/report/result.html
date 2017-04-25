@@ -189,8 +189,8 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>my test report</h1>
-<p class='attribute'><strong>Start Time:</strong> 2017-04-25 06:46:05</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:00.013784</p>
+<p class='attribute'><strong>Start Time:</strong> 2017-04-25 11:45:22</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:00.296474</p>
 <p class='attribute'><strong>Status:</strong> Error 1</p>
 
 <p class='description'>my Description</p>
@@ -222,7 +222,7 @@ function showOutput(id, name) {
 </tr>
 
 <tr class='errorClass'>
-    <td>unittest.suite._ErrorHolder</td>
+    <td>testsuite</td>
     <td>1</td>
     <td>0</td>
     <td>0</td>
@@ -231,7 +231,7 @@ function showOutput(id, name) {
 </tr>
 
 <tr id='ft1.1' class='none'>
-    <td class='errorCase'><div class='testcase'>testsuite)</div></td>
+    <td class='errorCase'><div class='testcase'>addUserAccess</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
@@ -245,20 +245,22 @@ function showOutput(id, name) {
         </div>
         <pre>
         
-ft1.1: Traceback (most recent call last):
-  File "/opt/vizionWorkSpace/vizion/src/com/panzura/resources/units/singletest.py", line 18, in setUpClass
-    (statusCode, singletest.apikey) = lp.login()
-  File "/opt/vizionWorkSpace/vizion/src/com/panzura/resources/pages/login.py", line 15, in login
-    user = Property.getProperties('loginUser')
-  File "/opt/vizionWorkSpace/vizion/src/com/panzura/resources/units/property.py", line 15, in getProperties
-    dom = minidom.parse(cccXmlPath)
-  File "/usr/lib/python2.7/xml/dom/minidom.py", line 1918, in parse
-    return expatbuilder.parse(file)
-  File "/usr/lib/python2.7/xml/dom/expatbuilder.py", line 924, in parse
-    result = builder.parseFile(fp)
-  File "/usr/lib/python2.7/xml/dom/expatbuilder.py", line 207, in parseFile
-    parser.Parse(buffer, 0)
-ExpatError: mismatched tag: line 8, column 2
+ft1.1: /usr/local/lib/python2.7/dist-packages/requests/packages/urllib3/connectionpool.py:852: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)
+Traceback (most recent call last):
+  File "testsuite.py", line 150, in addUserAccess
+    (ok, message) = s3p.insert_access(apikeyValue, args)
+  File "/opt/vizionWorkSpace/vizion/src/com/panzura/resources/pages/s3userPage.py", line 57, in insert_access
+    response_dict = response.json()
+  File "/usr/local/lib/python2.7/dist-packages/requests/models.py", line 858, in json
+    self.content.decode(encoding), **kwargs
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 382, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+ValueError: No JSON object could be decoded
 
 
         </pre>

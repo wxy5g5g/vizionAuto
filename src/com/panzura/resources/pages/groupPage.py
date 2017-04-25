@@ -38,7 +38,7 @@ class CCCGroup(Page):
         insert_url = 'https://' + args['server_ip'] + ':8443/groups' + '?api_key=' + str(apikey)
         insert_group_json = json.dumps({'name': args['name'], 
                                          'tenant': args['tenant'], 
-                                         'info': args['info'], 
+                                         'info': 'info', 
                                          'policy' : {
                                                      'policies': [
                                                                    {

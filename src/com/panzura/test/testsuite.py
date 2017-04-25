@@ -39,10 +39,11 @@ class testsuite(singletest):
                 'status': '0'}
         apikeyValue = singletest.apikey
         tp = TenantPage()
+#        tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         self.assertEqual(200, ok,'Response Code is ' + str(ok))
         self.assertEqual(message.lower() , 'complete', 'Response Body : "message" is :' + message)
-        tp.delete_tenant(apikeyValue, args)
+
 
     #test case-002: search a tenant 
     def getTenant(self):
@@ -153,9 +154,9 @@ class testsuite(singletest):
 if __name__ == "__main__":
     suite = unittest.TestSuite()
     """tenant section"""
-    suite.addTest(testsuite("newTenant"))
-    suite.addTest(testsuite("createNewGroup"))
-    suite.addTest(testsuite("createNewS3user"))
+#    suite.addTest(testsuite("newTenant"))
+#    suite.addTest(testsuite("createNewGroup"))
+#    suite.addTest(testsuite("createNewS3user"))
     suite.addTest(testsuite("addUserAccess"))
     
     fp = open('../resources/report/result.html', 'wb')

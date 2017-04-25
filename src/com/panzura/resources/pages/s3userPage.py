@@ -34,7 +34,7 @@ class CCCS3user(Page):
         insert_url = 'https://' + args['server_ip'] + ':8443/s3users' + '?api_key=' + str(apikey)
         insert_s3user_json = json.dumps({'name': args['name'], 
                                          'group': [args['group']], 
-                                         'info': args['info'], 
+                                         'info': 'info', 
                                          'password': "testpassword", 
                                          'tenant':args['tenant']
                                          }) 
@@ -50,7 +50,8 @@ class CCCS3user(Page):
         """ will return (0, "complete") if add access successfully"""
         insert_url = 'https://' + args['server_ip'] + ':8443/s3users/' + args['name'] + '/s3access' + '?api_key=' + str(apikey) 
         self.logInfo("The url is : " + insert_url)
-        headers = {'content-type':'text/plain'}
+        headers = {'content-type':'text/plain',
+                   'Accept':'application/json'}
         response = requests.put(insert_url, headers=headers, verify=False, timeout=60)
 
         response_dict = response.json()
