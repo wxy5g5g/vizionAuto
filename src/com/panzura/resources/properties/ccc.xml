@@ -1,5 +1,8 @@
 <ccc info="CCC server">
-    <serverIP>10.180.108.11</serverIP>
+    <serverIP>10.180.108.31</serverIP>
     <loginUser>root</loginUser>
     <loginPasswd>password</loginPasswd>
+    <testTenant>MyTenant0001<testTenant>
+    <testGroup>MyGroup0001<testGroup>
+    <tests3User>MyS3User0001<tests3User>
 </ccc>

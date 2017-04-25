@@ -4,10 +4,13 @@ from HTMLTestRunner import HTMLTestRunner
 from pydoc import describe
 import json
 import requests
-from resources.pages.tenant import TenantPage
+from resources.pages.tenantPage import TenantPage
+from resources.pages.groupPage import CCCGroup
+from resources.pages.s3userPage import CCCS3user
 from xml.dom import minidom
 from resources.units.property import Property
 from email import email
+from resources.pages.s3userPage import CCCS3user
 
 
 class testsuite(singletest):
@@ -25,8 +28,9 @@ class testsuite(singletest):
     #test case-001: create a new tenant
     def newTenant(self):
         serverip = Property.getProperties('serverIP')
+        myTenant = Property.getProperties('testTenant')
         args = {'server_ip': serverip,
-                'name': 'tenant_001',
+                'name': myTenant,
                 'email': 'testVizion@panzura.com',
                 'info': 'insertNewTenantInfo',
                 'password': 'password',
@@ -102,15 +106,57 @@ class testsuite(singletest):
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         self.assertEqual(200, ok,'Response Code is ' + str(ok))
         (status, message) = tp.delete_tenant(apikeyValue, args)
-        self.assertEqual(status, 1, message)
+        self.assertEqual(status, 0, message)
+        
+        #create a new group
+    def createNewGroup(self):
+        serverip= Property.getProperties('serverIP')
+        myTenant = Property.getProperties('testTenant')
+        myGroup = Property.getProperties('testGroup')
+        args = {'server_ip': serverip,
+            'name': myGroup, 
+            'tenant': myTenant}
+        apikeyValue = singletest.apikey
+        gp = CCCGroup()
+        (ok, message) = gp.insert_group(apikeyValue, args)
+        self.assertEqual(ok,0,message)
+        
+        #create a new s3 user
+    def createNewS3user(self):
+        serverip = Property.getProperties('serverIP')
+        myTenant = Property.getProperties('testTenant')
+        myGroup = Property.getProperties('testGroup')
+        myUserName = Property.getProperties('tests3User')
+        args = {'server_ip': serverip,
+            'name': myUserName, 
+            'group': myGroup, 
+            'tenant':myTenant}
+        apikeyValue = singletest.apikey
+        s3p = CCCS3user()
+        (ok, message) = s3p.insert_s3user(apikeyValue, args)
+        self.assertEqual(ok,200,message)
+        
+        #Add access for s3 user
+    def addUserAccess(self):  
+        serverip = Property.getProperties("serverIP")
+        myUserName = Property.getProperties('tests3User')
+        args = {'server_ip': serverip,
+                'name': myUserName
+                }
+        apikeyValue = singletest.apikey
+        s3p = CCCS3user()
+        (ok, message) = s3p.insert_access(apikeyValue, args)
+        self.assertEqual(ok, 0, message)
+        
         
         
 if __name__ == "__main__":
     suite = unittest.TestSuite()
+    """tenant section"""
     suite.addTest(testsuite("newTenant"))
-    suite.addTest(testsuite("getTenant"))
-    suite.addTest(testsuite("editTenant"))
-    suite.addTest(testsuite("deleteTenant"))
+    suite.addTest(testsuite("createNewGroup"))
+    suite.addTest(testsuite("createNewS3user"))
+    suite.addTest(testsuite("addUserAccess"))
     
     fp = open('../resources/report/result.html', 'wb')
     runner = HTMLTestRunner(stream=fp,title = 'my test report',description='my Description')

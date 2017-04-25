@@ -21,7 +21,6 @@ class TenantPage(Page):
         response = requests.get(query_url, verify=False, timeout=60)
 
         self.logInfo("Response Body is as following :")
-#        self.logInfo(response.json())
         response_dict = response.json()
         tenantNames = []
         for item in response_dict['data']:           
@@ -79,7 +78,7 @@ class TenantPage(Page):
         
 
     def delete_tenant(self, apikey, args):
-        """will return '1' if delete tenant successfully, otherwise will return -1"""
+        """  Will return (0, "complete") if delete successfully """
         delete_url = 'https://' + args['server_ip'] + ':8443/tenants/' + args['name'] + '?api_key=' + str(apikey)
         headers = {'content-type':'application/json'}
 
@@ -89,10 +88,4 @@ class TenantPage(Page):
         self.logInfo(response.json())
         response_dict = response.json()
     
-        returnStatus= response_dict['status']
-        if returnStatus == 1:
-            response.status_code = -1
-            self.logInfo(response_dict['message'])    
-        else:
-            response.status_code = 1                
-        return (response.status_code, response_dict['message'])
+        return (response_dict['status'], response_dict['message'])
