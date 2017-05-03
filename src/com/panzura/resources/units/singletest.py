@@ -6,7 +6,7 @@ import inspect
 
 logging.basicConfig()
 log = logging.getLogger()
-log.setLevel('INFO')
+log.setLevel('DEBUG')
 
 
 class singletest(unittest.TestCase):

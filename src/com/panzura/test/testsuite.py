@@ -7,23 +7,26 @@ import requests
 from resources.pages.tenantPage import TenantPage
 from resources.pages.groupPage import CCCGroup
 from resources.pages.s3userPage import CCCS3user
+from resources.pages.s3serverPage import S3Server
 from xml.dom import minidom
 from resources.units.property import Property
 from email import email
-from resources.pages.s3userPage import CCCS3user
+
+
 
 
 class testsuite(singletest):
-    
+    accessid = ""
+    secretKey = ""
 
     def testPrint(self):
         
-     cccXmlPath = "../resources/properties/ccc.xml"
-     dom = minidom.parse(cccXmlPath)
-     root = dom.documentElement
-     ccc = dom.getElementsByTagName('serverIP')
-     serverip = ccc[0].firstChild.data
-     self.logInfo(serverip)
+        cccXmlPath = "../resources/properties/ccc.xml"
+        dom = minidom.parse(cccXmlPath)
+        root = dom.documentElement
+        ccc = dom.getElementsByTagName('serverIP')
+        serverip = ccc[0].firstChild.data
+        self.logInfo(serverip)
      
     #test case-001: create a new tenant
     def newTenant(self):
@@ -135,6 +138,9 @@ class testsuite(singletest):
         apikeyValue = singletest.apikey
         s3p = CCCS3user()
         (ok, message) = s3p.insert_s3user(apikeyValue, args)
+        self.logInfo('access info :' + message[0] + message[1])
+        testsuite.accessid = str(message[0])
+        testsuite.secretKey = str(message[1])
         self.assertEqual(ok,200,message)
         
         #Add access for s3 user
@@ -149,15 +155,33 @@ class testsuite(singletest):
         (ok, message) = s3p.insert_access(apikeyValue, args)
         self.assertEqual(ok, 0, message)
         
+        #list bucket
+    def listBucket(self):
+        self.logInfo("########  test cases : list bucket #########")
+        serverip  = Property.getProperties("s3serverIP")
+        self.logInfo("host is : " + serverip)
+        args = {'server_ip': serverip,
+                'accessKey': testsuite.accessid,
+                'secretKey': testsuite.secretKey
+                }
+       
+        s3s = S3Server()
+        s3s.connect(args)
+#        s3s.create_bucket(args)
+        bucketsNames = s3s.list_bucket()
+        self.logInfo(bucketsNames)
+#        self.assertIn(args['bucketName'], bucketsNames, "Cannot get the bucket name in s3 server")
         
+           
         
 if __name__ == "__main__":
     suite = unittest.TestSuite()
     """tenant section"""
 #    suite.addTest(testsuite("newTenant"))
 #    suite.addTest(testsuite("createNewGroup"))
-#    suite.addTest(testsuite("createNewS3user"))
-    suite.addTest(testsuite("addUserAccess"))
+    suite.addTest(testsuite("createNewS3user"))
+#    suite.addTest(testsuite("addUserAccess"))--- failed
+    suite.addTest(testsuite("listBucket"))
     
     fp = open('../resources/report/result.html', 'wb')
     runner = HTMLTestRunner(stream=fp,title = 'my test report',description='my Description')

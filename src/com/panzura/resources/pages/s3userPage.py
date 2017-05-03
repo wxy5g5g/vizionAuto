@@ -44,16 +44,19 @@ class CCCS3user(Page):
         response = requests.post(insert_url, data=insert_s3user_json, headers=headers, verify=False, timeout=60)
 
         response_dict = response.json()
-        return(response.status_code, response_dict['message'])
+        accessInfo = [response_dict['data']['access']['id'],response_dict['data']['access']['secret']]
+        self.logInfo("access id is :" + accessInfo[0])
+        self.logInfo("access secret is :" + accessInfo[1])
+        return(response.status_code, accessInfo)
+    
 
     def insert_access(self, apikey, args):
         """ will return (0, "complete") if add access successfully"""
         insert_url = 'https://' + args['server_ip'] + ':8443/s3users/' + args['name'] + '/s3access' + '?api_key=' + str(apikey) 
         self.logInfo("The url is : " + insert_url)
-        headers = {'content-type':'text/plain',
-                   'Accept':'application/json'}
+        headers = {'content-type':'application/json'}
         response = requests.put(insert_url, headers=headers, verify=False, timeout=60)
-
+        self.logInfo(response.json)
         response_dict = response.json()
         return(response_dict['status'],response_dict['message'])
 

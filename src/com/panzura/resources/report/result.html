@@ -189,9 +189,9 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>my test report</h1>
-<p class='attribute'><strong>Start Time:</strong> 2017-04-25 11:45:22</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:00.296474</p>
-<p class='attribute'><strong>Status:</strong> Error 1</p>
+<p class='attribute'><strong>Start Time:</strong> 2017-05-03 03:45:08</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:58.470048</p>
+<p class='attribute'><strong>Status:</strong> Pass 1 Error 1</p>
 
 <p class='description'>my Description</p>
 </div>
@@ -223,44 +223,70 @@ function showOutput(id, name) {
 
 <tr class='errorClass'>
     <td>testsuite</td>
+    <td>2</td>
     <td>1</td>
     <td>0</td>
-    <td>0</td>
     <td>1</td>
-    <td><a href="javascript:showClassDetail('c1',1)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('c1',2)">Detail</a></td>
 </tr>
 
-<tr id='ft1.1' class='none'>
-    <td class='errorCase'><div class='testcase'>addUserAccess</div></td>
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>createNewS3user</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.1')" >
-        error</a>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        pass</a>
 
-    <div id='div_ft1.1' class="popup_window">
+    <div id='div_pt1.1' class="popup_window">
         <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.1').style.display = 'none' " >
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
            [x]</a>
         </div>
         <pre>
         
-ft1.1: /usr/local/lib/python2.7/dist-packages/requests/packages/urllib3/connectionpool.py:852: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+pt1.1: /usr/local/lib/python2.7/dist-packages/requests/packages/urllib3/connectionpool.py:852: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning)
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.2' class='none'>
+    <td class='errorCase'><div class='testcase'>listBucket</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.2')" >
+        error</a>
+
+    <div id='div_ft1.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft1.2: /usr/local/lib/python2.7/dist-packages/requests/packages/urllib3/connectionpool.py:852: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
   InsecureRequestWarning)
 Traceback (most recent call last):
-  File "testsuite.py", line 150, in addUserAccess
-    (ok, message) = s3p.insert_access(apikeyValue, args)
-  File "/opt/vizionWorkSpace/vizion/src/com/panzura/resources/pages/s3userPage.py", line 57, in insert_access
-    response_dict = response.json()
-  File "/usr/local/lib/python2.7/dist-packages/requests/models.py", line 858, in json
-    self.content.decode(encoding), **kwargs
-  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python2.7/json/decoder.py", line 382, in raw_decode
-    raise ValueError("No JSON object could be decoded")
-ValueError: No JSON object could be decoded
+  File "testsuite.py", line 171, in listBucket
+    bucketsNames = s3s.list_bucket()
+  File "/opt/vizionWorkSpace/vizion/src/com/panzura/resources/pages/s3serverPage.py", line 35, in list_bucket
+    buckets = self.conn.get_all_buckets()
+  File "/home/lowry/.local/lib/python2.7/site-packages/boto/s3/connection.py", line 440, in get_all_buckets
+    response = self.make_request('GET', headers=headers)
+  File "/home/lowry/.local/lib/python2.7/site-packages/boto/s3/connection.py", line 668, in make_request
+    retry_handler=retry_handler
+  File "/home/lowry/.local/lib/python2.7/site-packages/boto/connection.py", line 1071, in make_request
+    retry_handler=retry_handler)
+  File "/home/lowry/.local/lib/python2.7/site-packages/boto/connection.py", line 1030, in _mexe
+    raise ex
+SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:590)
 
 
         </pre>
@@ -272,8 +298,8 @@ ValueError: No JSON object could be decoded
 
 <tr id='total_row'>
     <td>Total</td>
+    <td>2</td>
     <td>1</td>
-    <td>0</td>
     <td>0</td>
     <td>1</td>
     <td>&nbsp;</td>
