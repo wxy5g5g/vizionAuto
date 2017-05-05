@@ -34,7 +34,7 @@ class CCCStorages(Page):
                        'type':response_dict['data'][0]['connectiontype'],
                        'hostip':response_dict['data'][0]['host'],
                        'name':response_dict['data'][0]['name'],
-                       'secret':response_dict['data'][0]['passwd'],
+                       'secret':response_dict['data'][0]['password'],
                        'port':response_dict['data'][0]['port'],
                        'status':response_dict['data'][0]['status'],
                        'storagetype':response_dict['data'][0]['storagetype'],

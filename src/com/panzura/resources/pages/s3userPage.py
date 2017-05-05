@@ -29,9 +29,9 @@ class CCCS3user(Page):
 
 
 
-    def insert_s3user(self,apikey, args):
+    def insert_s3user(self, args):
         """ will return (200, "complete") if insert new s3 user successfully"""
-        insert_url = 'https://' + args['server_ip'] + ':8443/s3users' + '?api_key=' + str(apikey)
+        insert_url = 'https://' + args['server_ip'] + ':8443/s3users' + '?api_key=' + str(args['apikey'])
         insert_s3user_json = json.dumps({'name': args['name'], 
                                          'group': [args['group']], 
                                          'info': 'info', 
@@ -50,9 +50,9 @@ class CCCS3user(Page):
         return(response.status_code, accessInfo)
     
 
-    def insert_access(self, apikey, args):
+    def insert_access(self, args):
         """ will return (0, "complete") if add access successfully"""
-        insert_url = 'https://' + args['server_ip'] + ':8443/s3users/' + args['name'] + '/s3access' + '?api_key=' + str(apikey) 
+        insert_url = 'https://' + args['server_ip'] + ':8443/s3users/' + args['name'] + '/s3access' + '?api_key=' + str(args['apikey']) 
         self.logInfo("The url is : " + insert_url)
         headers = {'content-type':'application/json'}
         response = requests.put(insert_url, headers=headers, verify=False, timeout=60)
@@ -61,9 +61,9 @@ class CCCS3user(Page):
         return(response_dict['status'],response_dict['message'])
 
 
-    def delete_s3user(self, apikey, args):
+    def delete_s3user(self, args):
         """  Will return (0, "complete") if delete successfully """
-        delete_url = 'https://' + args['server_ip'] + ':8443/s3users/' + args['name'] + '?api_key=' + str(apikey)
+        delete_url = 'https://' + args['server_ip'] + ':8443/s3users/' + args['name'] + '?api_key=' + str(args['apikey'])
         self.logInfo("The url is : " + delete_url)
         headers = {'Accept':'application/json'}
         response = requests.delete(delete_url, headers=headers, verify=False, timeout=60)

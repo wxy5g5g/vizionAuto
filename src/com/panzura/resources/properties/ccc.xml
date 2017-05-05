@@ -1,9 +1,9 @@
 <ccc info="CCC server">
-    <serverIP>10.180.108.20</serverIP>
-	<s3serverIP>10.180.108.27</s3serverIP>
+    <serverIP>10.180.108.100</serverIP>
+	<s3serverIP>10.180.108.28</s3serverIP>
     <loginUser>root</loginUser>
     <loginPasswd>password</loginPasswd>
-    <testTenant>MyTenant0001</testTenant>
-    <testGroup>MyGroup0001</testGroup>
-    <tests3User>MyS3User0001</tests3User>
+    <testTenant>MyTenant00003</testTenant>
+    <testGroup>MyGroup00003</testGroup>
+    <tests3User>MyS3User00003</tests3User>
 </ccc>

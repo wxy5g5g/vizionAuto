@@ -7,14 +7,16 @@ import requests
 from resources.pages.tenantPage import TenantPage
 from resources.pages.groupPage import CCCGroup
 from resources.pages.s3userPage import CCCS3user
-from resources.pages.s3serverPage import S3Server
+#from resources.pages.s3Page import S3Server
 from resources.pages.nodesPage import CCCNode
 from resources.pages.mdclusterPage import CCCMdcluster
 from resources.pages.storagesPage import CCCStorages
+from resources.pages.s3servicesPage import CCCS3services
 import time
 from xml.dom import minidom
 from resources.units.property import Property
 from email import email
+from boto.dynamodb.condition import NULL
 
 
 
@@ -24,17 +26,9 @@ class testsuite(singletest):
     accessid = ""
     secretKey = ""
 
-    def testPrint(self):
-        
-        cccXmlPath = "../resources/properties/ccc.xml"
-        dom = minidom.parse(cccXmlPath)
-        root = dom.documentElement
-        ccc = dom.getElementsByTagName('serverIP')
-        serverip = ccc[0].firstChild.data
-        self.logInfo(serverip)
-     
     #test case-001: create a new tenant
     def newTenant(self):
+        self.logInfo("####### test Case: 004_create a new tenant ######")
         serverip = Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
         args = {'server_ip': serverip,
@@ -51,10 +45,12 @@ class testsuite(singletest):
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         self.assertEqual(200, ok,'Response Code is ' + str(ok))
         self.assertEqual(message.lower() , 'complete', 'Response Body : "message" is :' + message)
+        tp.delete_tenant(apikeyValue, args)
 
 
     #test case-002: search a tenant 
     def getTenant(self):
+        self.logInfo("####### test Case: 022_search a tenant ######")
         serverip = Property.getProperties('serverIP')
         args = {'server_ip': serverip,
                 'name': 'tenant_002',
@@ -75,6 +71,7 @@ class testsuite(singletest):
         
         #test case-003: modify a tenant 
     def editTenant(self):
+        self.logInfo("####### test Case: 000_modify a tenant ######")
         serverip = Property.getProperties('serverIP')
         args = {'server_ip': serverip,
                 'name': 'tenant_003',
@@ -101,6 +98,7 @@ class testsuite(singletest):
         
         #delete a tenant
     def deleteTenant(self):
+        self.logInfo("####### test Case: 001_delete a tenant ######")
         serverip = Property.getProperties('serverIP')
         args = {'server_ip': serverip,
             'name': 'tenant_004',
@@ -119,6 +117,7 @@ class testsuite(singletest):
         
         #create a new group
     def createNewGroup(self):
+        self.logInfo("####### test Case: 002_create a new group ######")
         serverip= Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
         myGroup = Property.getProperties('testGroup')
@@ -132,6 +131,7 @@ class testsuite(singletest):
         
         #create a new s3 user
     def createNewS3user(self):
+        self.logInfo("####### test Case: 003_create a new s3 user ######")
         serverip = Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
         myGroup = Property.getProperties('testGroup')
@@ -139,43 +139,17 @@ class testsuite(singletest):
         args = {'server_ip': serverip,
             'name': myUserName, 
             'group': myGroup, 
-            'tenant':myTenant}
-        apikeyValue = singletest.apikey
+            'tenant':myTenant,
+            'apikey': singletest.apikey}
         s3p = CCCS3user()
-        (ok, message) = s3p.insert_s3user(apikeyValue, args)
+        (ok, message) = s3p.insert_s3user(args)
         self.logInfo('access info :' + message[0] + message[1])
         testsuite.accessid = str(message[0])
         testsuite.secretKey = str(message[1])
-        self.assertEqual(ok,200,message)
-        
-        #Add access for s3 user
-    def addUserAccess(self):  
-        serverip = Property.getProperties("serverIP")
-        myUserName = Property.getProperties('tests3User')
-        args = {'server_ip': serverip,
-                'name': myUserName
-                }
-        apikeyValue = singletest.apikey
-        s3p = CCCS3user()
-        (ok, message) = s3p.insert_access(apikeyValue, args)
-        self.assertEqual(ok, 0, message)
-        
-        #list bucket
-    def listBucket(self):
-        self.logInfo("########  test cases : list bucket #########")
-        serverip  = Property.getProperties("s3serverIP")
-        self.logInfo("host is : " + serverip)
-        args = {'server_ip': serverip,
-                'accessKey': testsuite.accessid,
-                'secretKey': testsuite.secretKey
-                }
-       
-        s3s = S3Server()
-        s3s.connect(args)
-#        s3s.create_bucket(args)
-        bucketsNames = s3s.list_bucket()
-        self.logInfo(bucketsNames)
-#        self.assertIn(args['bucketName'], bucketsNames, "Cannot get the bucket name in s3 server")
+        try:
+            self.assertEqual(ok,200,message)
+        finally:
+            s3p.delete_s3user(args)
         
         #query all nodes out
     def queryNodes(self):
@@ -192,7 +166,7 @@ class testsuite(singletest):
         
         #query node by id
     def queryNodesById(self):
-        self.logInfo("####### test Case: 006_query all nodes by ID ######")
+        self.logInfo("####### test Case: 006_query node by ID ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -304,7 +278,7 @@ class testsuite(singletest):
         (ok, message)= mp.delete_mdcluster_node_by_id(args)
         self.assertEqual(ok, 0, message)
         (ok,message) = mp.query_mdcluster_node_by_id(args)
-        self.assertEqual(ok,1, "md still exists, did not be delete successfull")
+        self.assertEqual(ok,0, "md still exists, did not be delete successfull")
     
         #create a new mdcluster by id
     def postNewMdclusterById(self):
@@ -313,7 +287,9 @@ class testsuite(singletest):
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
                 'api_key':apikeyValue}
-        newId = {'id':'fcb4e58c-2ee7-11e7-b106-005056ae67c7'}
+        np = CCCNode()
+        (ok, ids) = np.query_nodeId(args)
+        newId = {'id':ids[-1]}# the the last node to post new mdcluster
         args.update(newId)
         mp = CCCMdcluster()
         (ok,hostip) = mp.post_mdcluster_node_by_id(args)
@@ -346,31 +322,150 @@ class testsuite(singletest):
         (ok,message) = sp.post_storages(args)
         self.assertEqual(ok,0,message)
         (ok, idxsNew) = sp.query_storages(args)
-        if(len(idxsNew) <= len(idxs)):
-            flag = False
-        else: flag = True
-        self.assertTrue(flag, "Cannot create new storage")
-        # find the new id that just was created
+        self.assertTrue(len(idxsNew) > len(idxs), "Cannot create new storage successfully")
+        # find the new id that just was created, then try to delete it
         for idx in idxsNew:
             if idx not in idxs:
                 newID = idx
         (ok,message) = sp.delete_storages_by_idx(newID, args) 
         self.assertEqual(ok,0, message)      
        
+        #query all s3 services
+    def queryS3services(self):
+        self.logInfo("####### test Case: 016_Query all s3 services ######")
+        cccServerIP = Property.getProperties('serverIP')
+        apikeyValue = singletest.apikey
+        args = {'server_ip': cccServerIP,
+                'api_key':apikeyValue}
+        s3sP = CCCS3services()
+        (ok, services) = s3sP.query_s3services(args)
+        self.assertEqual(ok, 200, " query all services failed!")
     
+        #Create a new S3 service
+    def createNewService(self):
+        self.logInfo("####### test Case: 017_Create a new s3 services ######")
+        cccServerIP = Property.getProperties('serverIP')
+        apikeyValue = singletest.apikey
+        args = {'server_ip': cccServerIP,
+                'api_key': apikeyValue,
+                'ip': '10.180.108.1'}    
+        np = CCCNode()
+        (ok,ids) = np.query_nodeId(args)
+        nodeid = {'id': ids[3]}#select node4 and try to start s3 on it
+        args.update(nodeid)
+        s3sp = CCCS3services()
+        (ok,message) = s3sp.post_s3services_by_id_ip(args)
+        self.assertEqual(ok, 0, message)
+        self.logInfo("Sleep 5 seconds to wait new service added")
+        time.sleep(5)
+        (ok,hostsIp) = s3sp.query_s3servicesHostIp(args)
+        self.assertTrue([args['ip']] in hostsIp, "Cannot find the host ip which just created, post action failed.")
+        
+        #delete a new S3 service
+    def deleteServiceByIdSubid(self):
+        self.logInfo("####### test Case: 018_Delete a new s3 services ######")
+        cccServerIP = Property.getProperties('serverIP')
+        apikeyValue = singletest.apikey
+        args = {'server_ip': cccServerIP,
+                'api_key': apikeyValue,
+                'ip': '10.180.108.2'}    
+        np = CCCNode()
+        (ok,ids) = np.query_nodeId(args)
+        nodeid = {'id': ids[3]}#select node4 and try to start s3 on it
+        args.update(nodeid)
+        s3sp = CCCS3services()
+        (ok,message) = s3sp.post_s3services_by_id_ip(args)
+        self.assertEqual(ok, 0, message)
+        (ok,ids) = s3sp.query_s3services(args)
+        self.assertEqual(ok,200, "get ids base on hostip failed.")
+        idAndSubid = {'id': ids[-1]['sid'],
+                      'subid': ids[-1]['ssubid']}
+        args.update(idAndSubid)
+        (ok, message) = s3sp.delete_s3services_by_id_subid(args)
+        self.assertEqual(ok, 0, message)
+         
+        #query s3services by id subid
+    def queryS3servicesByIdSubid(self):
+        self.logInfo("####### test Case: 019_Create a new s3 services ######")
+        cccServerIP = Property.getProperties('serverIP')
+        apikeyValue = singletest.apikey
+        args = {'server_ip': cccServerIP,
+                'api_key': apikeyValue}   
+            
+        s3sp = CCCS3services()
+        (ok, services) = s3sp.query_s3services(args)
+        serviceids = {'id': services[0]['sid'],#select the first service to do query
+                  'subid': services[0]['ssubid']} 
+        args.update(serviceids)
+        (ok, hostip) =  s3sp.query_s3services_by_id_subid(args)
+        self.logInfo(hostip)
+        self.assertTrue('null'!=str(hostip).lower(), "Query service by 'id ' and 'subid' failed")
+        
+        #start s3services by id subid
+    def startS3servicesByIdSubid(self):
+        self.logInfo("####### test Case: 020_Start a new s3 services ######")
+        cccServerIP = Property.getProperties('serverIP')
+        apikeyValue = singletest.apikey
+        args = {'server_ip': cccServerIP,
+                'api_key': apikeyValue}   
+            
+        s3sp = CCCS3services()
+        (ok, services) = s3sp.query_s3services(args)
+        serviceids = {'id': services[0]['sid'],#select the first service to do start
+                  'subid': services[0]['ssubid']} 
+        args.update(serviceids)
+        (ok, message) =  s3sp.start_s3services_by_id_subid(args)
+        self.assertEqual(ok, 200, message)    
+        
+        #stop s3services by id subid
+    def stopS3servicesByIdSubid(self):
+        self.logInfo("####### test Case: 021_Stop a new s3 services ######")
+        cccServerIP = Property.getProperties('serverIP')
+        apikeyValue = singletest.apikey
+        args = {'server_ip': cccServerIP,
+                'api_key': apikeyValue}   
+            
+        s3sp = CCCS3services()
+        (ok, services) = s3sp.query_s3services(args)
+        serviceids = {'id': services[0]['sid'],#select the first service to do stop
+                  'subid': services[0]['ssubid']} 
+        args.update(serviceids)
+        (ok, message) =  s3sp.stop_s3services_by_id_subid(args)
+        self.assertEqual(ok, 200, message)       
+       
+       
+
+        
 if __name__ == "__main__":
     suite = unittest.TestSuite()
-    """tenant section"""
-#    suite.addTest(testsuite("newTenant"))
-#    suite.addTest(testsuite("createNewGroup"))
-#    suite.addTest(testsuite("createNewS3user"))
-  
+    """suite section"""
+
+    suite.addTest(testsuite("newTenant"))
+    suite.addTest(testsuite("getTenant"))
+    suite.addTest(testsuite("editTenant"))
+#    suite.addTest(testsuite("deleteTenant"))
+    suite.addTest(testsuite("createNewGroup"))
+    suite.addTest(testsuite("createNewS3user"))
     suite.addTest(testsuite("queryNodes"))
     suite.addTest(testsuite("queryNodesById"))
     suite.addTest(testsuite("queryDockerByid"))
+    suite.addTest(testsuite("queryServicesByid"))
+    suite.addTest(testsuite("queryMdclusterNode"))
+    suite.addTest(testsuite("queryMdclusterNodeById"))
+#    suite.addTest(testsuite("deleteMdclusterNodeById"))
+    suite.addTest(testsuite("postNewMdclusterById"))
+    suite.addTest(testsuite("queryStorages"))
     suite.addTest(testsuite("createNewAndDeleteStorage"))
-    
-    fp = open('../resources/report/result.html', 'wb')
-    runner = HTMLTestRunner(stream=fp,title = 'my test report',description='my Description')
+    suite.addTest(testsuite("queryS3services"))
+    suite.addTest(testsuite("createNewService"))
+    suite.addTest(testsuite("deleteServiceByIdSubid"))
+    suite.addTest(testsuite("queryS3servicesByIdSubid"))
+    suite.addTest(testsuite("startS3servicesByIdSubid"))
+    suite.addTest(testsuite("stopS3servicesByIdSubid"))
+
+    now = time.strftime("%Y-%m-%d %H_%M_%S")
+    fileName = "../resources/report/" + now + '_VizionTestResult.html'
+    fp = open(fileName, 'wb')
+    runner = HTMLTestRunner(stream=fp,title = 'Vizion rest API test report at ' + now,description='sanity test')
     runner.run(suite)
     fp.close()
