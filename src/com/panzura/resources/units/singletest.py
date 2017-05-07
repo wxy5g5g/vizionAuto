@@ -3,6 +3,7 @@ import logging
 from resources.pages.login import LoginPage
 from resources.pages.page import Page
 import inspect
+from boto.dynamodb.condition import NULL
 
 logging.basicConfig()
 log = logging.getLogger()
@@ -35,9 +36,7 @@ class singletest(unittest.TestCase):
     
     def assertEqual(self, first, second, msg=None):
         """ if first equals second will pass, otherwise will fail test case and print msg"""
-        unittest.TestCase.assertEqual(self, first, second, msg=msg + "\n" + "#FAILED#")
-        log.info("\n" + "SUCCESSED")
-        
+        unittest.TestCase.assertEqual(self, first, second, msg=msg)
         
     def assertIn(self, member, container, msg=None):
         """ if member is contained by container will pass, otherwise will fail test case and print msg"""

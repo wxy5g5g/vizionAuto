@@ -3,7 +3,7 @@
 	<s3serverIP>10.180.108.28</s3serverIP>
     <loginUser>root</loginUser>
     <loginPasswd>password</loginPasswd>
-    <testTenant>MyTenant00004</testTenant>
-    <testGroup>MyGroup00004</testGroup>
-    <tests3User>MyS3User00004</tests3User>
+    <testTenant>MyTenant00005</testTenant>
+    <testGroup>MyGroup00005</testGroup>
+    <tests3User>MyS3User00005</tests3User>
 </ccc>
