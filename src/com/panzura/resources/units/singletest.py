@@ -26,6 +26,9 @@ class singletest(unittest.TestCase):
         detaledMsg = "%s.%s invoked >> %s" % (self.__class__.__name__, self.getCurrentFunctionName(), msg)
         log.info(detaledMsg)
     
+    def log(self, msg=None):
+        log.info(msg)
+        
     def assertTrue(self, expr, msg=None):
         """ if expr is true will pass, otherwise will fail test case and print msg"""
         unittest.TestCase.assertTrue(self, expr, msg=msg)

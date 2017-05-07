@@ -27,7 +27,7 @@ class testsuite(singletest):
     secretKey = ""
     
     def setUp(self):
-        self.logInfo(4*'\n')
+        self.log(4*'\n')
         
     #test case-001: create a new tenant
     def newTenant(self):
