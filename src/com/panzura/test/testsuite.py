@@ -25,7 +25,10 @@ from boto.dynamodb.condition import NULL
 class testsuite(singletest):
     accessid = ""
     secretKey = ""
-
+    
+    def setUp(self):
+        self.logInfo(4*'\n')
+        
     #test case-001: create a new tenant
     def newTenant(self):
         self.logInfo("####### test Case: 004_create a new tenant ######")
