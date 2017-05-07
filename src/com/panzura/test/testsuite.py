@@ -464,7 +464,9 @@ if __name__ == "__main__":
     suite.addTest(testsuite("stopS3servicesByIdSubid"))
 
     now = time.strftime("%Y-%m-%d %H_%M_%S")
-    fileName = "../resources/report/" + now + '_VizionTestResult.html'
+#    fileName = "../resources/report/" + now + '_VizionTestResult.html'
+    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.html'
+    
     fp = open(fileName, 'wb')
     runner = HTMLTestRunner(stream=fp,title = 'Vizion rest API test report at ' + now,description='sanity test')
     runner.run(suite)
