@@ -34,10 +34,14 @@ class singletest(unittest.TestCase):
         unittest.TestCase.assertFalse(self, expr, msg=msg)
     
     def assertEqual(self, first, second, msg=None):
-        """ if fiest equals second will pass, otherwise will fail test case and print msg"""
-        unittest.TestCase.assertEqual(self, first, second, msg=msg)
+        """ if first equals second will pass, otherwise will fail test case and print msg"""
+        unittest.TestCase.assertEqual(self, first, second, msg=msg + "\n" + "#FAILED#")
+        log.info("\n" + "SUCCESSED")
+        
         
     def assertIn(self, member, container, msg=None):
         """ if member is contained by container will pass, otherwise will fail test case and print msg"""
         unittest.TestCase.assertIn(self, member, container, msg=msg)
+    
+    
         
