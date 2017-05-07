@@ -10,7 +10,8 @@ class Property():
 
     @staticmethod
     def getProperties(fieldName):     
-        cccXmlPath = "../resources/properties/ccc.xml"
+        cccXmlPath = "/opt/workspace/ccc_api_test/src/com/panzura/resources/properties/ccc.xml"
+#        cccXmlPath = "../resources/properties/ccc.xml"
      
         dom = minidom.parse(cccXmlPath)
         root = dom.documentElement
