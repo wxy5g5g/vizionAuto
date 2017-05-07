@@ -31,7 +31,7 @@ class testsuite(singletest):
         
     #test case-001: create a new tenant
     def newTenant(self):
-        self.logInfo("####### test Case: 004_create a new tenant ######")
+        self.log("####### test Case: 004_create a new tenant ######")
         serverip = Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
         args = {'server_ip': serverip,
@@ -53,7 +53,7 @@ class testsuite(singletest):
 
     #test case-002: search a tenant 
     def getTenant(self):
-        self.logInfo("####### test Case: 022_search a tenant ######")
+        self.log("####### test Case: 022_search a tenant ######")
         serverip = Property.getProperties('serverIP')
         args = {'server_ip': serverip,
                 'name': 'tenant_002',
@@ -74,7 +74,7 @@ class testsuite(singletest):
         
         #test case-003: modify a tenant 
     def editTenant(self):
-        self.logInfo("####### test Case: 000_modify a tenant ######")
+        self.log("####### test Case: 000_modify a tenant ######")
         serverip = Property.getProperties('serverIP')
         args = {'server_ip': serverip,
                 'name': 'tenant_003',
@@ -101,7 +101,7 @@ class testsuite(singletest):
         
         #delete a tenant
     def deleteTenant(self):
-        self.logInfo("####### test Case: 001_delete a tenant ######")
+        self.log("####### test Case: 001_delete a tenant ######")
         serverip = Property.getProperties('serverIP')
         args = {'server_ip': serverip,
             'name': 'tenant_004',
@@ -120,7 +120,7 @@ class testsuite(singletest):
         
         #create a new group
     def createNewGroup(self):
-        self.logInfo("####### test Case: 002_create a new group ######")
+        self.log("####### test Case: 002_create a new group ######")
         serverip= Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
         myGroup = Property.getProperties('testGroup')
@@ -134,7 +134,7 @@ class testsuite(singletest):
         
         #create a new s3 user
     def createNewS3user(self):
-        self.logInfo("####### test Case: 003_create a new s3 user ######")
+        self.log("####### test Case: 003_create a new s3 user ######")
         serverip = Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
         myGroup = Property.getProperties('testGroup')
@@ -156,7 +156,7 @@ class testsuite(singletest):
         
         #query all nodes out
     def queryNodes(self):
-        self.logInfo("####### test Case: 005_query all nodes ######")
+        self.log("####### test Case: 005_query all nodes ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -169,7 +169,7 @@ class testsuite(singletest):
         
         #query node by id
     def queryNodesById(self):
-        self.logInfo("####### test Case: 006_query node by ID ######")
+        self.log("####### test Case: 006_query node by ID ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -184,7 +184,7 @@ class testsuite(singletest):
     
         #query docker by id
     def queryDockerByid(self):
-        self.logInfo("####### test Case: 007_query all dockers by ID ######")
+        self.log("####### test Case: 007_query all dockers by ID ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -198,7 +198,7 @@ class testsuite(singletest):
 
         #query services on each node
     def queryServicesByid(self):
-        self.logInfo("####### test Case: 008_query all service by ID ######")
+        self.log("####### test Case: 008_query all service by ID ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -244,7 +244,7 @@ class testsuite(singletest):
     
         #query all mdcluster node id
     def queryMdclusterNode(self):
-        self.logInfo("####### test Case: 009_query all mdcluster ######")
+        self.log("####### test Case: 009_query all mdcluster ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -255,7 +255,7 @@ class testsuite(singletest):
         
         #query mdcluster by id
     def queryMdclusterNodeById(self):
-        self.logInfo("####### test Case: 010_query mdcluster by id ######")
+        self.log("####### test Case: 010_query mdcluster by id ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -269,7 +269,7 @@ class testsuite(singletest):
         
         #delete md by node id
     def deleteMdclusterNodeById(self):
-        self.logInfo("####### test Case: 011_Delete a mdcluster by id ######")
+        self.log("####### test Case: 011_Delete a mdcluster by id ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -285,7 +285,7 @@ class testsuite(singletest):
     
         #create a new mdcluster by id
     def postNewMdclusterById(self):
-        self.logInfo("####### test Case: 012_Create a new mdcluster by id, this case depense on 011 ######")
+        self.log("####### test Case: 012_Create a new mdcluster by id, this case depense on 011 ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -300,7 +300,7 @@ class testsuite(singletest):
         
         #querry storages
     def queryStorages(self):
-        self.logInfo("####### test Case: 013_Query storages ######")
+        self.log("####### test Case: 013_Query storages ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -311,7 +311,7 @@ class testsuite(singletest):
     
         #Create a new storage
     def createNewAndDeleteStorage(self):
-        self.logInfo("####### test Case: 014_Create a new storages ### test Case: 015_Delete a new storages ######")
+        self.log("####### test Case: 014_Create a new storages ### test Case: 015_Delete a new storages ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -335,7 +335,7 @@ class testsuite(singletest):
        
         #query all s3 services
     def queryS3services(self):
-        self.logInfo("####### test Case: 016_Query all s3 services ######")
+        self.log("####### test Case: 016_Query all s3 services ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -346,7 +346,7 @@ class testsuite(singletest):
     
         #Create a new S3 service
     def createNewService(self):
-        self.logInfo("####### test Case: 017_Create a new s3 services ######")
+        self.log("####### test Case: 017_Create a new s3 services ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -366,7 +366,7 @@ class testsuite(singletest):
         
         #delete a new S3 service
     def deleteServiceByIdSubid(self):
-        self.logInfo("####### test Case: 018_Delete a new s3 services ######")
+        self.log("####### test Case: 018_Delete a new s3 services ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -389,7 +389,7 @@ class testsuite(singletest):
          
         #query s3services by id subid
     def queryS3servicesByIdSubid(self):
-        self.logInfo("####### test Case: 019_Create a new s3 services ######")
+        self.log("####### test Case: 019_Create a new s3 services ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -406,7 +406,7 @@ class testsuite(singletest):
         
         #start s3services by id subid
     def startS3servicesByIdSubid(self):
-        self.logInfo("####### test Case: 020_Start a new s3 services ######")
+        self.log("####### test Case: 020_Start a new s3 services ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
@@ -422,7 +422,7 @@ class testsuite(singletest):
         
         #stop s3services by id subid
     def stopS3servicesByIdSubid(self):
-        self.logInfo("####### test Case: 021_Stop a new s3 services ######")
+        self.log("####### test Case: 021_Stop a new s3 services ######")
         cccServerIP = Property.getProperties('serverIP')
         apikeyValue = singletest.apikey
         args = {'server_ip': cccServerIP,
