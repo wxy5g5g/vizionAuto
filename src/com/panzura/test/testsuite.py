@@ -18,6 +18,7 @@ from xml.dom import minidom
 from resources.units.property import Property
 from email import email
 from boto.dynamodb.condition import NULL
+from resources.pages import groupPage
 
 
 
@@ -35,6 +36,13 @@ class testsuite(singletest):
         self.log("####### test Case: 004_create a new tenant ######")
         serverip = Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
+        myGroup = Property.getProperties('testGroup')
+        gp = CCCGroup()
+        arg = {'server_ip': serverip,
+            'name': myGroup, 
+            'tenant': myTenant}
+        apikeyValue = singletest.apikey
+        (ok, message) = gp.delete_group(apikeyValue, arg)
         args = {'server_ip': serverip,
                 'name': myTenant,
                 'email': 'testVizion@panzura.com',
@@ -45,7 +53,7 @@ class testsuite(singletest):
                 'status': '0'}
         apikeyValue = singletest.apikey
         tp = TenantPage()
-#        tp.delete_tenant(apikeyValue, args)
+        tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         self.assertEqual(200, ok,'Response Code is ' + str(ok))
         self.assertEqual(message.lower() , 'complete', 'Response Body : "message" is :' + message)
@@ -130,6 +138,7 @@ class testsuite(singletest):
             'tenant': myTenant}
         apikeyValue = singletest.apikey
         gp = CCCGroup()
+        (ok, message) = gp.delete_group(apikeyValue, args)
         (ok, message) = gp.insert_group(apikeyValue, args)
         self.assertEqual(ok,0,message)
         
@@ -470,7 +479,7 @@ if __name__ == "__main__":
     now = time.strftime("%Y-%m-%d %H_%M_%S")
 #    fileName = "../resources/report/" + now + '_VizionTestResult.html'
 #    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.html'
-    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.xml'
+    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/"
     
     fp = open(fileName, 'wb')
     runner = HTMLTestRunner(stream=fp,title = 'Vizion rest API test report at ' + now,description='sanity test')
