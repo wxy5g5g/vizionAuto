@@ -481,8 +481,8 @@ if __name__ == "__main__":
 #    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.html'
     fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/"
     
-    fp = open(fileName, 'wb')
-    runner = HTMLTestRunner(stream=fp,title = 'Vizion rest API test report at ' + now,description='sanity test')
+#    fp = open(fileName, 'wb')
+    runner = HTMLTestRunner(stream=fileName,title = 'Vizion rest API test report at ' + now,description='sanity test')
     runner = xmlrunner.XMLTestRunner(output=fileName )
     runner.run(suite)
-    fp.close()
+#    fp.close()
