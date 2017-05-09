@@ -43,6 +43,8 @@ class testsuite(singletest):
             'tenant': myTenant}
         apikeyValue = singletest.apikey
         (ok, message) = gp.delete_group(apikeyValue, arg)
+        arg['name'] = 'default'
+        (ok, message) = gp.delete_group(apikeyValue, arg)# delete group named 'default'
         args = {'server_ip': serverip,
                 'name': myTenant,
                 'email': 'testVizion@panzura.com',
