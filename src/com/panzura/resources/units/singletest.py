@@ -45,5 +45,4 @@ class singletest(unittest.TestCase):
         """ if member is contained by container will pass, otherwise will fail test case and print msg"""
         unittest.TestCase.assertIn(self, member, container, msg=msg)
     
-    
         

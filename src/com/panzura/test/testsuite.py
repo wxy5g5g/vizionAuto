@@ -1,6 +1,7 @@
 from resources.units.singletest import singletest
 import unittest
 from HTMLTestRunner import HTMLTestRunner
+import xmlrunner
 from pydoc import describe
 import json
 import requests
@@ -468,9 +469,11 @@ if __name__ == "__main__":
 
     now = time.strftime("%Y-%m-%d %H_%M_%S")
 #    fileName = "../resources/report/" + now + '_VizionTestResult.html'
-    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.html'
+#    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.html'
+    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.xml'
     
     fp = open(fileName, 'wb')
     runner = HTMLTestRunner(stream=fp,title = 'Vizion rest API test report at ' + now,description='sanity test')
+    runner = xmlrunner.XMLTestRunner(output=fileName )
     runner.run(suite)
     fp.close()
