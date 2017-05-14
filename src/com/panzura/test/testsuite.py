@@ -136,10 +136,19 @@ class testsuite(singletest):
         myTenant = Property.getProperties('testTenant')
         myGroup = Property.getProperties('testGroup')
         args = {'server_ip': serverip,
-            'name': myGroup, 
-            'tenant': myTenant}
+                'name': myTenant,
+                'email': 'testVizion@panzura.com',
+                'info': 'insertNewTenantInfo',
+                'password': 'password',
+                'phone': '111-123-234',
+                'policy': 'testPolicy',
+                'status': '0',
+                'tenant': myTenant}
         apikeyValue = singletest.apikey
+        tp = TenantPage()
+        (ok,message) = tp.insert_tenant(apikeyValue, args)
         gp = CCCGroup()
+        args['name'] = myGroup
         (ok, message) = gp.delete_group(apikeyValue, args)
         (ok, message) = gp.insert_group(apikeyValue, args)
         self.assertEqual(ok,0,message)
