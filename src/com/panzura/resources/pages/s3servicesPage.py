@@ -23,8 +23,8 @@ class CCCS3services(Page):
         response = requests.get(query_url, headers=headers, verify=False, timeout=60)
         response_dict = response.json()
         serviceList = []# this is a 'id' and 'subid' list
-        for item in response_dict:
-            service={'sid': item['id'],
+        for item in response_dict['data']:
+            service={'sid': item['id'],#sid is server id
                     'ssubid': item['subid']}
             serviceList.append(service)
         self.logInfo('Total has ' + str(len(serviceList)) + ', all services are :')
@@ -40,12 +40,11 @@ class CCCS3services(Page):
         idList = []# this is all 'id' list
         hostDict = {}
         count = -1
-        for item in response_dict: #get the id and subid base on the hostip
+        for item in response_dict['data']: #get the id and subid base on the hostip
             self.logInfo(item['hostip'])
             self.logInfo(args['ip'])
             count +=1
             if args['ip']==str(item['hostip']):
-                self.logInfo('$$$$$$$$$$$$$$$$$$$$$$$$$')
                 break
         hostDict = item[count]
         self.logInfo(hostDict)
@@ -62,7 +61,7 @@ class CCCS3services(Page):
         response = requests.get(query_url, headers=headers, verify=False, timeout=60)
         response_dict = response.json()
         hostList = []# this is a 'hostip' list
-        for item in response_dict:
+        for item in response_dict['data']:
             service=item['hostip']
             hostList.append(service)
         self.logInfo('Total has ' + str(len(hostList)) + ', all host ip are :')
