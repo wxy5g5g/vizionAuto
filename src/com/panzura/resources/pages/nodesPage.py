@@ -73,5 +73,5 @@ class CCCNode(Page):
 
         response_dict = response.json()
         services = {'mdnode':response_dict['mdnode'],
-                    'managementnode':response_dict['managementnode']}
+                    'managementdocker':response_dict['managementdocker']}
         return (response.status_code, services)

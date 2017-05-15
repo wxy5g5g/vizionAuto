@@ -234,22 +234,22 @@ class testsuite(singletest):
         (ok, servers) = np.query_service_by_id(args['id1'], args)
         self.assertEqual(ok, 200, servers)
         self.assertEqual(servers['mdnode'], 'true', "mdnode  on node1 should be true")
-        self.assertEqual(servers['managementnode'], 'true', "managementnode  on node1 should be true")
+        self.assertEqual(servers['managementdocker'], 'true', "managementnode  on node1 should be true")
         
         (ok, servers) = np.query_service_by_id(args['id2'], args)
         self.assertEqual(ok, 200, servers)
         self.assertEqual(servers['mdnode'], 'true', "mdnode  on node2 should be true")
-        self.assertEqual(servers['managementnode'], 'false', "managementnode  on node2 should be false")
+        self.assertEqual(servers['managementdocker'], 'false', "managementnode  on node2 should be false")
                
         (ok, servers) = np.query_service_by_id(args['id3'], args)
         self.assertEqual(ok, 200, servers)
         self.assertEqual(servers['mdnode'], 'false', "mdnode  on node3 should be false")
-        self.assertEqual(servers['managementnode'], 'false', "managementnode  on node3 should be false")
+        self.assertEqual(servers['managementdocker'], 'false', "managementnode  on node3 should be false")
         
         (ok, servers) = np.query_service_by_id(args['id4'], args)
         self.assertEqual(ok, 200, servers)
         self.assertEqual(servers['mdnode'], 'true', "mdnode  on node4 should be true")
-        self.assertEqual(servers['managementnode'], 'false', "managementnode  on node4 should be false")
+        self.assertEqual(servers['managementdocker'], 'false', "managementnode  on node4 should be false")
     
         #query all mdcluster node id
     def queryMdclusterNode(self):
