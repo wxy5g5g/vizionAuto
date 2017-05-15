@@ -478,7 +478,7 @@ if __name__ == "__main__":
     now = time.strftime("%Y-%m-%d %H_%M_%S")
 #    fileName = "../resources/report/" + now + '_VizionTestResult.html'
 #    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/" + now + '_VizionTestResult.html'
-    fileName = "/opt/workspace/ccc_api_test/src/com/panzura/resources/report/"
+    fileName = "/opt/workspace/CCC_api_test_demo/src/com/panzura/resources/report/"
     
 #    fp = open(fileName, 'wb')
     runner = HTMLTestRunner(stream=fileName,title = 'Vizion rest API test report at ' + now,description='sanity test')

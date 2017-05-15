@@ -72,9 +72,6 @@ class CCCNode(Page):
         response = requests.get(query_url, headers=headers, verify=False, timeout=60)
 
         response_dict = response.json()
-        services = {'storagenode':response_dict['storagenode'],
-                    'mdnode':response_dict['mdnode'],
-                    'managementnode':response_dict['managementnode'],
-                    'cephmonitor':response_dict['cephmonitoringnode'],
-                    'cephrgwnode':response_dict['cephrgwnode']}
+        services = {'mdnode':response_dict['mdnode'],
+                    'managementnode':response_dict['managementnode']}
         return (response.status_code, services)
