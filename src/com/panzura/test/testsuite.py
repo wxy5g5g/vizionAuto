@@ -248,7 +248,7 @@ class testsuite(singletest):
         
         (ok, servers) = np.query_service_by_id(args['id4'], args)
         self.assertEqual(ok, 200, servers)
-        self.assertTrue(servers['mdnode'], "mdnode  on node4 should be true, but actually it's " + servers['mdnode'])
+        self.assertTrue(servers['mdnode'], "mdnode  on node4 should be true")
         self.assertFalse(servers['managementdocker'], "managementnode  on node4 should be false")
 
         #query all mdcluster node id
