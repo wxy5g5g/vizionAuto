@@ -45,8 +45,12 @@ class TenantPage(Page):
 
         self.logInfo("Response Body is as following :")
         self.logInfo(response.json())
-        queryTenantName = response.json()['data']['name']
-        self.logInfo("The Name field in Response Body is : " + queryTenantName)
+        try:
+            queryTenantName = response.json()['data']['name']
+        except Exception, e:
+            raise Exception("Failed to create tenant " + args['name']+ " since ", str(e) )
+        else:
+            self.logInfo("The Tenant names in Response Body is : " + queryTenantName)
         return (response.status_code,queryTenantName)
     
     
