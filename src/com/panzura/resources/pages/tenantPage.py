@@ -37,7 +37,6 @@ class TenantPage(Page):
                                          'info': args['info'], 
                                          'password': args['password'], 
                                          'phone': args['phone'], 
-                                         'policy': args['policy'], 
                                          'status': args['status'] 
                                          }) 
         
