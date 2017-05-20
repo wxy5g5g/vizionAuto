@@ -146,13 +146,11 @@ class testsuite(singletest):
                 'tenant': myTenant}
         apikeyValue = singletest.apikey
         tp = TenantPage()
-        (status, message) = tp.delete_tenant(apikeyValue, args)
+        tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         gp = CCCGroup()
         args['name'] = myGroup
-        self.logInfo("111111>>>>>>>>>>>>>>>>>>>>>>"+args['name'])
         gp.delete_group(apikeyValue, args)
-        self.logInfo("2222222>>>>>>>>>>>>>>>>>>>>>>"+args['name'])
         (ok, message) = gp.insert_group(apikeyValue, args)
         self.assertEqual(ok,0,message)
         
@@ -160,14 +158,29 @@ class testsuite(singletest):
     def createNewS3user(self):
         self.log("####### test Case: 003_create a new s3 user ######")
         serverip = Property.getProperties('serverIP')
-        myTenant = Property.getProperties('testTenant')
-        myGroup = Property.getProperties('testGroup')
-        myUserName = Property.getProperties('tests3User')
+        myTenant = 'testTenant-003'
+        myGroup = 'testGroup-003'
+        myUserName = 'tests3User-003'
+        apikeyValue = singletest.apikey
         args = {'server_ip': serverip,
-            'name': myUserName, 
+                'name': myTenant,
+                'email': 'testVizion@panzura.com',
+                'info': 'insertNewTenantInfo',
+                'password': 'password',
+                'phone': '111-123-234',
+                'status': '0',
+                'tenant': myTenant}
+        tp = TenantPage()
+        gp = CCCGroup()
+        gp.delete_group(apikeyValue, args)
+        tp.delete_tenant(apikeyValue, args)
+        (ok,message) = tp.insert_tenant(apikeyValue, args)
+        args['name'] = myGroup
+        (ok, message) = gp.insert_group(apikeyValue, args)
+        args = {'name': myUserName, 
             'group': myGroup, 
             'tenant':myTenant,
-            'apikey': singletest.apikey}
+            'apikey': apikeyValue}
         s3p = CCCS3user()
         s3p.delete_s3user(args)
         (ok, message) = s3p.insert_s3user(args)
