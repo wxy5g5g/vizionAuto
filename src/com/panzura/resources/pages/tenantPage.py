@@ -46,10 +46,9 @@ class TenantPage(Page):
 
         self.logInfo("Response Body is as following :")
         self.logInfo(response.json())
-        queryTenantMeg = response.json()['message']
-        self.logInfo("The message field in Response Body is : " + queryTenantMeg)
-        
-        return (response.status_code,queryTenantMeg)
+        queryTenantName = response.json()['data']['name']
+        self.logInfo("The Name field in Response Body is : " + queryTenantName)
+        return (response.status_code,queryTenantName)
     
     
     def update_tenant(self, apikey, args):
