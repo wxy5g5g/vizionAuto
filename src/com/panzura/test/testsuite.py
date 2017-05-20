@@ -141,7 +141,6 @@ class testsuite(singletest):
                 'info': 'insertNewTenantInfo',
                 'password': 'password',
                 'phone': '111-123-234',
-                'policy': 'testPolicy',
                 'status': '0',
                 'tenant': myTenant}
         apikeyValue = singletest.apikey
