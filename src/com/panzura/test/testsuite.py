@@ -177,7 +177,8 @@ class testsuite(singletest):
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         args['name'] = myGroup
         (ok, message) = gp.insert_group(apikeyValue, args)
-        args = {'name': myUserName, 
+        args = {'server_ip': serverip,
+            'name': myUserName, 
             'group': myGroup, 
             'tenant':myTenant,
             'apikey': apikeyValue}
