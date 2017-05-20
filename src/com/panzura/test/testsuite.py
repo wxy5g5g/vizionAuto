@@ -100,9 +100,8 @@ class testsuite(singletest):
         newEmail = 'test002@panzura.com'
         apikeyValue = singletest.apikey
         tp = TenantPage()
-        tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
-        self.assertEqual(message,args['name'], 'create new tenant failed, return name is : "' + message + '"')
+        self.assertEqual(ok,200, 'create new tenant failed, return code is : "' + str(ok) + '"')
         args['password'] = newPasswd
         args['phone'] = newPhone
         args['email'] = newEmail
