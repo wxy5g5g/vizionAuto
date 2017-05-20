@@ -150,6 +150,7 @@ class testsuite(singletest):
         gp = CCCGroup()
         args['name'] = myGroup
         gp.delete_group(apikeyValue, args)
+        self.logInfo(">>>>>>>>>>>>>>>>>>>>>>"+args['name'])
         (ok, message) = gp.insert_group(apikeyValue, args)
         self.assertEqual(ok,0,message)
         
