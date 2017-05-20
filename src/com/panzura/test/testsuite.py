@@ -58,7 +58,7 @@ class testsuite(singletest):
         tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         self.assertEqual(200, ok,'Response Code is ' + str(ok))
-        self.assertEqual(message.lower() , 'complete', 'Response Body : "message" is :' + message)
+        self.assertEqual(message.lower() , myTenant, 'Response Body : "message" is :' + message)
         tp.delete_tenant(apikeyValue, args)
 
 
@@ -146,10 +146,11 @@ class testsuite(singletest):
                 'tenant': myTenant}
         apikeyValue = singletest.apikey
         tp = TenantPage()
+        (status, message) = tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         gp = CCCGroup()
         args['name'] = myGroup
-        (ok, message) = gp.delete_group(apikeyValue, args)
+        gp.delete_group(apikeyValue, args)
         (ok, message) = gp.insert_group(apikeyValue, args)
         self.assertEqual(ok,0,message)
         
@@ -166,6 +167,7 @@ class testsuite(singletest):
             'tenant':myTenant,
             'apikey': singletest.apikey}
         s3p = CCCS3user()
+        s3p.delete_s3user(args)
         (ok, message) = s3p.insert_s3user(args)
         self.logInfo('access info :' + message[0] + message[1])
         testsuite.accessid = str(message[0])
