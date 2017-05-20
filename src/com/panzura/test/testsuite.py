@@ -163,7 +163,7 @@ class testsuite(singletest):
         myUserName = 'tests3User-003'
         apikeyValue = singletest.apikey
         args = {'server_ip': serverip,
-                'name': myTenant,
+                'name': myGroup,
                 'email': 'testVizion@panzura.com',
                 'info': 'insertNewTenantInfo',
                 'password': 'password',
@@ -173,6 +173,7 @@ class testsuite(singletest):
         tp = TenantPage()
         gp = CCCGroup()
         gp.delete_group(apikeyValue, args)
+        args['name'] = myTenant
         tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         args['name'] = myGroup
