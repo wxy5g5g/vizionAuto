@@ -150,8 +150,9 @@ class testsuite(singletest):
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         gp = CCCGroup()
         args['name'] = myGroup
+        self.logInfo("111111>>>>>>>>>>>>>>>>>>>>>>"+args['name'])
         gp.delete_group(apikeyValue, args)
-        self.logInfo(">>>>>>>>>>>>>>>>>>>>>>"+args['name'])
+        self.logInfo("2222222>>>>>>>>>>>>>>>>>>>>>>"+args['name'])
         (ok, message) = gp.insert_group(apikeyValue, args)
         self.assertEqual(ok,0,message)
         
