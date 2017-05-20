@@ -66,8 +66,9 @@ class testsuite(singletest):
     def getTenant(self):
         self.log("####### test Case: 022_search a tenant ######")
         serverip = Property.getProperties('serverIP')
+        myTenant = Property.getProperties('testTenant')
         args = {'server_ip': serverip,
-                'name': 'tenant_002',
+                'name': myTenant,
                 'email': 'testVizion@panzura.com',
                 'info': 'insertNewTenantInfo',
                 'password': 'password',
@@ -85,7 +86,7 @@ class testsuite(singletest):
         
         #test case-003: modify a tenant 
     def editTenant(self):
-        self.log("####### test Case: 000_modify a tenant ######")
+        self.log("####### test Case: 000_edit a tenant ######")
         serverip = Property.getProperties('serverIP')
         myTenant = Property.getProperties('testTenant')
         args = {'server_ip': serverip,
