@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/src/com/panzura/')
 from resources.units.singletest import singletest
 import unittest
 from HTMLTestRunner import HTMLTestRunner
