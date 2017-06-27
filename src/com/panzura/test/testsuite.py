@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/src/com/panzura/')
+sys.path.append('/opt/workspace/CCC_api_test_demo/src/com/panzura/')
 from resources.units.singletest import singletest
 import unittest
 from HTMLTestRunner import HTMLTestRunner
