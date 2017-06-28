@@ -46,12 +46,12 @@ class TenantPage(Page):
         self.logInfo("Response Body is as following :")
         self.logInfo(response.json())
         try:
-            queryTenantName = response.json()['data']['name']
+            createStatus = response.json()['message']
         except KeyError, e:
             raise Exception("Failed to create tenant " + args['name']+ " since response body no 'key' named ", str(e) )
         else:
-            self.logInfo("The Tenant names in Response Body is : " + queryTenantName)
-        return (response.status_code,queryTenantName)
+            self.logInfo("The Tenant names in Response Body is : " + createStatus)
+        return (response.status_code,createStatus)
     
     
     def update_tenant(self, apikey, args):
