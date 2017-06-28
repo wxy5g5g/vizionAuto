@@ -350,6 +350,7 @@ class testsuite(singletest):
         (ok, idxs) = sp.query_storages(args)#get the count of idxs before creating new one
         storageInfo = sp.query_first_storages(args)
         storageInfo['name'] = 'new_ceph_local_' + str(time.time())
+        storageInfo['target'] = 'panzura_vizion_datastore' + str(time.time())
         args.update(storageInfo)
         self.logInfo( args)
         (ok,message) = sp.post_storages(args)
