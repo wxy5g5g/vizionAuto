@@ -60,7 +60,7 @@ class testsuite(singletest):
         tp.delete_tenant(apikeyValue, args)
         (ok,message) = tp.insert_tenant(apikeyValue, args)
         self.assertEqual(200, ok,'Response Code is ' + str(ok))
-        self.assertEqual(message , myTenant, 'Response Body : "message" is :' + message)
+        self.assertEqual(message, "Success", 'Response Body : "message" is :' + message)
         tp.delete_tenant(apikeyValue, args)
 
 
