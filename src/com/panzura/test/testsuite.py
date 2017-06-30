@@ -325,8 +325,8 @@ class testsuite(singletest):
         newId = {'id':ids[-1]}# the the last node to post new mdcluster
         args.update(newId)
         mp = CCCMdcluster()
-        (ok,hostip) = mp.post_mdcluster_node_by_id(args)
-        self.assertEqual(ok,0, 'hostip is : ' + str(hostip))
+        (ok,msg) = mp.post_mdcluster_node_by_id(args)
+        self.assertEqual(ok,0, 'create new MD node ' + str(msg))
         
         #querry storages
     def queryStorages(self):
