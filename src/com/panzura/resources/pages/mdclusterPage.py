@@ -43,7 +43,7 @@ class CCCMdcluster(Page):
         headers = {'content-type':'application/json'}
         response = requests.delete(query_url, verify=False, timeout=60)
         response_dict = response.json()
-        return (response_dict['status'],response_dict['message'])
+        return response_dict['status'],response_dict['message']
 			
     def post_mdcluster_node_by_id(self, args):
         """ retrun (0,hostip) if post successfully"""
@@ -51,4 +51,4 @@ class CCCMdcluster(Page):
         headers = {'content-type':'application/json'}
         response = requests.post(insert_url,  verify=False, timeout=60)
         response_dict = response.json()
-        return(response_dict['status'],response_dict['data']['hostip'])
+        return response_dict['status'],response_dict['message']
