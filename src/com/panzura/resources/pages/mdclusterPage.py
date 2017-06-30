@@ -49,6 +49,6 @@ class CCCMdcluster(Page):
         """ retrun (0,hostip) if post successfully"""
         insert_url = 'https://' + args['server_ip'] + ':8443/mdcluster/nodes/' + args['id'] + '?api_key=' + args['api_key']
         headers = {'content-type':'application/json'}
-        response = requests.post(insert_url,  verify=False, timeout=60)
+        response = requests.post(insert_url,  verify=False, timeout=90)
         response_dict = response.json()
         return response_dict['status'],response_dict['message']
